@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acyutananda Naming Tool & Auditor</title>
+    <link rel="stylesheet" href="style.css">
+    </head>
+<body>
+
+<div class="container">
+
+    <header class="app-header">
+        <button class="theme-toggle" onclick="app.toggleTheme()">◑</button>
+        <h1>Acyutananda Jyotisa</h1>
+        <p>Vedic Naming Tool & Katapayadi Auditor</p>
+    </header>
+
+    <div class="nav-tabs" style="display:flex; justify-content:center; gap:10px; margin-bottom:20px;">
+        <button class="tab-btn active" onclick="app.switchTab('naming')">Naming Tool</button>
+        <button class="tab-btn" onclick="app.switchTab('katapayadi')">Katapayadi Auditor</button>
+    </div>
+
+    <div id="tab_naming">
+        
+        <section class="panel control-deck" id="control_deck_main">
+            <div class="deck-header">
+                <span>BIRTH DATA</span>
+                <div class="toolbar">
+                    <button class="btn-tool" onclick="app.autoLocate('m')">📍 My Loc</button>
+                </div>
+            </div>
+            
+            <div class="input-grid">
+                <div class="row">
+                    <div class="input-group-box" style="flex:1;">
+                        <label>Reference Name (Optional)</label>
+                        <input type="text" id="m_name" placeholder="e.g. Baby Name">
+                    </div>
+                    <div class="input-group-box" style="flex:1;">
+                        <label>Date of Birth</label>
+                        <input type="date" id="m_dob">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-group-box" style="flex:1;">
+                        <label>Time</label>
+                        <input type="time" id="m_tob" step="1">
+                    </div>
+                    
+                    <div class="input-group-box" style="flex:1;">
+                        <label>Timezone (UTC Offset)</label>
+                        <div id="m_tz_status" style="font-size:0.75rem; color:var(--text-muted); margin-bottom:4px; min-height:1.2em;">
+                            Select city to detect zone...
+                        </div>
+                        
+                        <select id="m_tz">
+                            <option value="-12.0">(GMT -12:00) Eniwetok, Kwajalein</option>
+                            <option value="-11.0">(GMT -11:00) Midway Island, Samoa</option>
+                            <option value="-10.0">(GMT -10:00) Hawaii</option>
+                            <option value="-9.0">(GMT -9:00) Alaska</option>
+                            <option value="-8.0">(GMT -8:00) Pacific Time (US & Canada)</option>
+                            <option value="-7.0">(GMT -7:00) Mountain Time (US & Canada)</option>
+                            <option value="-6.0">(GMT -6:00) Central Time (US & Canada), Mexico City</option>
+                            <option value="-5.0">(GMT -5:00) Eastern Time (US & Canada), Bogota, Lima</option>
+                            <option value="-4.0">(GMT -4:00) Atlantic Time (Canada), Caracas, La Paz</option>
+                            <option value="-3.5">(GMT -3:30) Newfoundland</option>
+                            <option value="-3.0">(GMT -3:00) Brazil, Buenos Aires, Georgetown</option>
+                            <option value="-2.0">(GMT -2:00) Mid-Atlantic</option>
+                            <option value="-1.0">(GMT -1:00) Azores, Cape Verde Islands</option>
+                            <option value="0" selected>(GMT) Western Europe Time, London, Lisbon, Casablanca</option>
+                            <option value="1.0">(GMT +1:00) Brussels, Copenhagen, Madrid, Paris</option>
+                            <option value="2.0">(GMT +2:00) Kaliningrad, South Africa</option>
+                            <option value="3.0">(GMT +3:00) Baghdad, Riyadh, Moscow, St. Petersburg</option>
+                            <option value="3.5">(GMT +3:30) Tehran</option>
+                            <option value="4.0">(GMT +4:00) Abu Dhabi, Muscat, Baku, Tbilisi</option>
+                            <option value="4.5">(GMT +4:30) Kabul</option>
+                            <option value="5.0">(GMT +5:00) Ekaterinburg, Islamabad, Karachi, Tashkent</option>
+                            <option value="5.5">(GMT +5:30) Bombay, Calcutta, Madras, New Delhi</option>
+                            <option value="5.75">(GMT +5:45) Kathmandu, Pokhara</option>
+                            <option value="6.0">(GMT +6:00) Almaty, Dhaka, Colombo</option>
+                            <option value="7.0">(GMT +7:00) Bangkok, Hanoi, Jakarta</option>
+                            <option value="8.0">(GMT +8:00) Beijing, Perth, Singapore, Hong Kong</option>
+                            <option value="9.0">(GMT +9:00) Tokyo, Seoul, Osaka, Sapporo, Yakutsk</option>
+                            <option value="9.5">(GMT +9:30) Adelaide, Darwin</option>
+                            <option value="10.0">(GMT +10:00) Eastern Australia, Guam, Vladivostok</option>
+                            <option value="11.0">(GMT +11:00) Magadan, Solomon Islands, New Caledonia</option>
+                            <option value="12.0">(GMT +12:00) Auckland, Wellington, Fiji, Kamchatka</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-group-box" style="flex:2;">
+                        <label>City Search</label>
+                        <input type="text" id="m_city" onkeyup="app.ui.handleSearchDebounced('m')" placeholder="Start typing city...">
+                        <div id="m_city_results" class="results-dropdown"></div>
+                    </div>
+                    <div class="input-group-box" style="flex:1;">
+                        <label>Lat</label>
+                        <input type="text" id="m_lat" readonly>
+                    </div>
+                    <div class="input-group-box" style="flex:1;">
+                        <label>Lon</label>
+                        <input type="text" id="m_lon" readonly>
+                    </div>
+                </div>
+
+                <button class="btn-run" onclick="app.calculate('m')">Generate Naming Analysis</button>
+            </div>
+        </section>
+
+        <section id="naming_guide_panel" class="panel naming-step" style="display:none;">
+            <div class="step-header">
+                <span>Step 1: Iṣṭa-devatā (The Protector)</span>
+                <span class="ak-badge">AK: <span id="ng_ak_name">--</span> (<span id="ng_ak_deg">--</span>)</span>
+            </div>
+            
+            <div style="padding: 24px;">
+                <div style="margin-bottom:20px;">
+                    <span style="font-size:0.9rem; color:var(--text-muted);">Jīvanmuktāṁśa (12th from AK in D9):</span>
+                    <strong style="font-size:1.2rem; margin-left:10px; color:var(--primary);" id="ng_ista_sign">--</strong>
+                </div>
+
+                <div class="deity-card">
+                    <label class="group-label">Planetary Candidates</label>
+                    <div id="ng_candidates_list">
+                        </div>
+                    <div style="margin-top:15px; font-size:0.85rem; font-style:italic; color:var(--text-muted);" id="ng_guidance_text"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="step2_panel" class="panel naming-step" style="display:none; border-left-color: #059669;">
+            <div class="step-header">
+                <span>Step 2-4: Planetary Strength (First Syllable)</span>
+                <span class="ak-badge" style="background: #059669;">Shadbala</span>
+            </div>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:0;">
+                <div class="planet-list-scroll" id="ng_shadbala_list" style="border:none; border-right:1px solid var(--border);">
+                    </div>
+
+                <div style="padding:24px;">
+                    <label class="group-label" style="color:#059669;">Selected Planet</label>
+                    <div style="font-size:2rem; font-weight:900; color:var(--text-main);" id="ng_selected_planet">--</div>
+                    <div style="margin-bottom:15px; font-size:0.9rem; color:var(--text-muted);">Strength Score: <span id="ng_selected_score">--</span></div>
+                    
+                    <div class="info-box-sm">
+                        <strong style="color:var(--primary);">Sound Group:</strong> <span id="ng_selected_group">--</span><br>
+                        <div style="margin-top:4px; font-weight:bold;" id="ng_selected_sounds">--</div>
+                    </div>
+                    <p style="font-size:0.8rem; color:var(--text-muted); margin-top:10px;">
+                        Click any planet on the left to analyze its specific sounds below.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="hoda_chakra_panel" class="panel naming-step" style="display:none; border-left-color: #8b5cf6;">
+            <div class="step-header">
+                <span>Step 5: Hoda Chakra (Harmonic Filter)</span>
+                <span class="ak-badge" style="background: #8b5cf6;" id="hc_planet_name">--</span>
+            </div>
+            
+            <div style="padding: 24px;">
+                <p class="instruction-text">
+                    The chart below filters sounds based on their harmony with the <strong>Moon</strong> (Mind/Body) and <strong>Lagna</strong> (Direction).
+                    <br><span style="font-size:0.8rem; color:var(--text-muted);">Gold = Excellent (Kendra/Trikona). Red/Hashed = Avoid (6, 8, 12 from Moon).</span>
+                </p>
+
+                <div id="hc_chart_container" class="si-container">
+                    </div>
+            </div>
+        </section>
+
+        <section id="svara_panel" class="panel naming-step" style="display:none; border-left-color: #f59e0b;">
+            <div class="step-header">
+                <span>Step 6-9: The Svara (Sound) Analysis</span>
+                <span class="ak-badge" style="background: #f59e0b;">Vowel & Timing</span>
+            </div>
+
+            <div style="padding: 24px;">
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px;">
+                    <div class="deity-card">
+                        <label class="group-label" style="color:#f59e0b;">First Vowel (Svara)</label>
+                        <div style="font-size:2rem; font-weight:900; margin:10px 0;">
+                            <span id="sv_vowel">--</span> 
+                            <span style="font-size:1rem; color:var(--text-muted); font-weight:400;">(Sign: <span id="sv_sign">--</span>)</span>
+                        </div>
+                        <div class="info-box-sm" id="sv_moon_status">--</div>
+                        <div style="margin-top:5px; font-size:0.8rem; color:var(--text-muted);" id="sv_lagna_status">--</div>
+                    </div>
+
+                    <div class="deity-card">
+                        <label class="group-label" style="color:#f59e0b;">Planetary Activation (Avasthā)</label>
+                        <div style="margin:10px 0;">
+                            <div style="font-size:0.85rem; color:var(--text-muted);">This name activates:</div>
+                            <div id="sv_activated_planets" style="font-size:1.2rem; font-weight:bold; color:var(--text-main);">--</div>
+                        </div>
+                        <div class="info-box-sm" id="sv_ak_recommendation" style="background: #fffbeb; border-left-color:#f59e0b;">
+                            </div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 30px; padding:15px; background:var(--hover-bg); border-radius:8px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div>
+                            <span style="font-weight:bold;">Syllable Count (Laganā):</span> 
+                            <span id="sv_syllable_count" style="font-size:1.2rem; font-weight:900; margin-left:10px;">--</span>
+                            <span id="sv_nature" style="margin-left:10px; color:var(--text-muted); font-size:0.9rem;">--</span>
+                        </div>
+                        <div id="sv_support_msg" style="font-weight:600; font-size:0.9rem;">--</div>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="group-label" style="color:#f59e0b;">Pañcasvara Daśā (Focus Timeline)</label>
+                    <div id="sv_dasa_timeline" class="dasa-timeline">
+                        </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="visual_lab_section" class="panel" style="display:none;">
+            <div style="padding:15px; border-bottom:1px solid var(--border); font-weight:bold; font-size:0.9rem;">
+                Reference Chart (Navamsa D9)
+            </div>
+            <div style="padding:20px; display:flex; justify-content:center;">
+                <div id="si_chart1" class="si-container"></div>
+            </div>
+        </section>
+
+    </div><div id="tab_katapayadi" style="display:none;">
+        <div class="app-grid-kp">
+            <div class="panel">
+                <h2 style="margin-top:0; border-bottom:1px solid #eee; padding-bottom:10px;">
+                    Katapayadi Input
+                    <span class="badge" style="background:var(--primary); color:white; font-size:0.6em; padding:2px 6px; border-radius:4px; vertical-align:middle; margin-left:8px;">Hardened</span>
+                </h2>
+
+                <div class="mode-switch">
+                    <div class="mode-opt active" onclick="app.kp.setMode('dev')" id="btnDev">Devanagari</div>
+                    <div class="mode-opt" onclick="app.kp.setMode('eng')" id="btnEng">English</div>
+                </div>
+
+                <div class="input-wrapper" style="margin-bottom:20px;">
+                    <input type="text" id="kpInput" placeholder="Enter text (e.g. माइक्रोसॉफ्ट्)..." style="width:100%; padding:10px; font-size:1.1rem;">
+                    <div id="engWarning" style="display:none; color:orange; font-size:0.85em; margin-top:5px;">
+                        ⚠️ Warning: English inputs rely on phonetic approximation.
+                    </div>
+                    <button class="btn-run" onclick="app.kp.process()" style="margin-top:10px; width:100%;">Audit Text</button>
+                </div>
+
+                <table class="kp-table">
+                    <thead>
+                        <tr>
+                            <th width="5%">#</th>
+                            <th width="35%">Input</th>
+                            <th width="40%">Log</th>
+                            <th width="20%">Result</th>
+                        </tr>
+                    </thead>
+                    <tbody id="kpResultsBody"></tbody>
+                </table>
+            </div>
+
+            <div class="panel">
+                <h3 style="color:var(--primary); margin-top:0;">Verification Chart</h3>
+                <select id="kpFilterSel" onchange="app.kp.draw()" style="width:100%; padding:8px; margin-bottom:15px;">
+                    <option value="">All Entries</option>
+                </select>
+                
+                <div class="kp-chart-grid">
+                    <div class="kp-box pi" data-s="12"><span class="kp-sign-tag">12 Pi</span><div class="kp-marker-list"></div></div>
+                    <div class="kp-box ar" data-s="1"><span class="kp-sign-tag">1 Ar</span><div class="kp-marker-list"></div></div>
+                    <div class="kp-box ta" data-s="2"><span class="kp-sign-tag">2 Ta</span><div class="kp-marker-list"></div></div>
+                    <div class="kp-box ge" data-s="3"><span class="kp-sign-tag">3 Ge</span><div class="kp-marker-list"></div></div>
+                    
+                    <div class="kp-box aq" data-s="11"><span class="kp-sign-tag">11 Aq</span><div class="kp-marker-list"></div></div>
+                    <div class="kp-center-lbl">SOUTH<br>INDIAN</div>
+                    <div class="kp-box cn" data-s="4"><span class="kp-sign-tag">4 Cn</span><div class="kp-marker-list"></div></div>
+                    
+                    <div class="kp-box cp" data-s="10"><span class="kp-sign-tag">10 Cp</span><div class="kp-marker-list"></div></div>
+                    <div class="kp-box le" data-s="5"><span class="kp-sign-tag">5 Le</span><div class="kp-marker-list"></div></div>
+                    
+                    <div class="kp-box sg" data-s="9"><span class="kp-sign-tag">9 Sg</span><div class="kp-marker-list"></div></div>
+                    <div class="kp-box sc" data-s="8"><span class="kp-sign-tag">8 Sc</span><div class="kp-marker-list"></div></div>
+                    <div class="kp-box li" data-s="7"><span class="kp-sign-tag">7 Li</span><div class="kp-marker-list"></div></div>
+                    <div class="kp-box vi" data-s="6"><span class="kp-sign-tag">6 Vi</span><div class="kp-marker-list"></div></div>
+                </div>
+            </div>
+        </div>
+    </div></div>
+
+<script src="js/astronomy-wrapper.js"></script> <script src="js/constants.js"></script>
+
+<script src="js/vedic-engine.js"></script>
+<script src="js/special-ascendants.js"></script>
+
+<script src="js/ista-devata.js"></script>
+<script src="js/shadbala-engine.js"></script>
+<script src="js/hoda-chakra-engine.js"></script>
+<script src="js/svara-engine.js"></script>
+<script src="js/katapayadi-engine.js"></script>
+
+<script src="js/app.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,508 @@
+/* --- ACYUTANANDA NAMING TOOL STYLES (COMPLETE) --- */
+
+:root {
+    /* --- LIGHT THEME (Default) --- */
+    --bg: #f8fafc;
+    --surface: #ffffff;
+    --border: #e2e8f0;
+    
+    /* Typography */
+    --header-bg: #0f172a;     /* Dark Slate */
+    --text-main: #334155;     /* Slate 700 */
+    --text-muted: #64748b;    /* Slate 500 */
+    
+    /* Actions & Accents */
+    --primary: #be123c;       /* Crimson (Auspicious Red) */
+    --primary-dark: #9f1239;
+    --success: #059669;       /* Emerald Green */
+    --planet-color: #be123c;  
+    
+    /* Inputs */
+    --input-bg: #ffffff;
+    --hover-bg: #f1f5f9;
+}
+
+/* --- DARK THEME OVERRIDES --- */
+[data-theme="dark"] {
+    --bg: #020617;           /* Deepest Black-Blue */
+    --surface: #0f172a;      /* Slate 900 */
+    --border: #1e293b;       /* Slate 800 */
+    
+    --header-bg: #000000;
+    --text-main: #e2e8f0;    /* Off-white */
+    --text-muted: #94a3b8;
+    
+    --primary: #fb7185;      /* Lighter Red/Pink for dark mode */
+    --primary-dark: #be123c;
+    --success: #34d399;      /* Bright Emerald */
+    --planet-color: #fb7185; 
+    
+    --input-bg: #1e293b;
+    --hover-bg: #334155;
+}
+
+/* --- GLOBAL LAYOUT --- */
+body {
+    background: var(--bg);
+    color: var(--text-main);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 24px;
+    transition: background 0.3s, color 0.3s;
+    line-height: 1.5;
+}
+
+.container { 
+    max-width: 900px; 
+    margin: 0 auto; 
+    position: relative; 
+}
+
+/* --- HEADER --- */
+.app-header { 
+    text-align: center; 
+    margin-bottom: 30px; 
+    position: relative; 
+}
+.app-header h1 { 
+    margin: 0; 
+    font-size: 1.75rem; 
+    color: var(--text-main); 
+    font-weight: 800; 
+}
+.app-header p { 
+    margin: 6px 0 0; 
+    color: var(--text-muted); 
+    font-size: 0.95rem; 
+}
+
+.theme-toggle {
+    position: absolute; top: 0; right: 0;
+    background: var(--surface); border: 1px solid var(--border);
+    color: var(--text-main); padding: 8px 12px; border-radius: 20px;
+    cursor: pointer; font-size: 1.2rem; transition: transform 0.2s;
+}
+.theme-toggle:hover { transform: scale(1.1); background: var(--hover-bg); }
+
+/* --- PANELS --- */
+.panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+    overflow: hidden;
+}
+
+/* --- CONTROL DECK (INPUTS) --- */
+.control-deck .deck-header {
+    background: var(--header-bg); color: white;
+    padding: 14px 20px; display: flex; justify-content: space-between; align-items: center;
+    font-weight: 600; font-size: 0.9rem;
+}
+
+.toolbar { display: flex; gap: 10px; }
+
+.btn-tool {
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+    color: white; padding: 6px 12px; border-radius: 5px; cursor: pointer;
+    font-size: 0.75rem; font-weight: 600; transition: background 0.2s;
+}
+.btn-tool:hover { background: rgba(255,255,255,0.2); }
+
+.input-grid { padding: 24px; display: grid; gap: 24px; }
+.input-group-box { display: flex; flex-direction: column; gap: 15px; position: relative; }
+.row { display: flex; gap: 15px; }
+
+input, select {
+    padding: 12px; border: 1px solid var(--border); border-radius: 6px;
+    width: 100%; font-size: 0.9rem; color: var(--text-main);
+    background: var(--input-bg); transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+input:focus, select:focus { outline: none; border-color: var(--primary); }
+
+/* DROPDOWN (Search Results) */
+.results-dropdown {
+    position: absolute; top: 100%; left: 0; right: 0;
+    background: var(--surface); border: 1px solid var(--primary);
+    border-radius: 6px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.2);
+    z-index: 1000; display: none; max-height: 250px; overflow-y: auto; margin-top: 4px;
+}
+.search-item { padding: 10px 14px; cursor: pointer; font-size: 0.85rem; border-bottom: 1px solid var(--border); color: var(--text-main); }
+.search-item:hover { background: var(--hover-bg); color: var(--primary); }
+
+.btn-run { 
+    background: var(--primary); color: white; border: none; 
+    padding: 14px; border-radius: 6px; font-weight: 800; 
+    cursor: pointer; text-transform: uppercase; letter-spacing: 0.05em; 
+    transition: background 0.2s; font-size: 0.9rem;
+}
+.btn-run:hover { background: var(--primary-dark); }
+
+/* --- NAMING STEP VISUALS (STEPS 1, 2, 5) --- */
+.naming-step { 
+    border-left: 5px solid var(--primary); 
+    margin-bottom: 30px; 
+    animation: slideUp 0.4s ease-out;
+}
+@keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+.step-header { 
+    background: var(--hover-bg); 
+    padding: 12px 20px; 
+    font-weight: 800; color: var(--text-muted); 
+    text-transform: uppercase; font-size: 0.75rem; 
+    letter-spacing: 0.05em;
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid var(--border);
+}
+
+.ak-badge { 
+    background: var(--primary); color: white; 
+    padding: 3px 10px; border-radius: 12px; 
+    font-size: 0.65rem; font-weight: bold; 
+    text-transform: uppercase;
+}
+
+.deity-card { 
+    background: var(--surface); 
+    border: 1px solid var(--border); 
+    border-radius: 8px; 
+    padding: 20px; 
+}
+
+.group-label { 
+    font-size: 0.7rem; font-weight: 800; 
+    color: var(--primary); text-transform: uppercase; 
+    border-bottom: 2px solid var(--border); 
+    padding-bottom: 6px; margin-bottom: 12px; display: block;
+}
+
+.instruction-text {
+    font-size: 0.9rem; color: var(--text-main); 
+    line-height: 1.5; margin-bottom: 15px;
+}
+.highlight { color: var(--primary); font-weight: 800; }
+
+.info-box-sm { 
+    background: var(--hover-bg); 
+    border-left: 3px solid var(--primary); 
+    padding: 10px; font-size: 0.85rem; 
+    color: var(--text-muted); 
+    border-radius: 4px;
+}
+
+/* --- STEP 2: INTERACTIVE LIST --- */
+.planet-list-scroll {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface);
+}
+
+.planet-row {
+    padding: 12px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.2s, border-left 0.2s;
+    border-left: 3px solid transparent;
+}
+.planet-row:hover { background: var(--hover-bg); }
+
+/* Active Selection State */
+.planet-row.active {
+    background: rgba(16, 185, 129, 0.1); 
+    border-left: 3px solid var(--success);
+}
+
+/* Role Badges */
+.role-badge {
+    font-size: 0.6rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+.role-badge.human { background: var(--success); color: white; }
+.role-badge.avatar { background: var(--text-muted); color: white; }
+
+/* --- STEP 5: HODA CHAKRA GRID --- */
+.hc-grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.hc-sound-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 6px;
+    text-align: center;
+    cursor: default;
+    transition: transform 0.2s;
+    background: var(--surface);
+}
+.hc-sound-card:hover { transform: translateY(-2px); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+
+/* Hoda Card Status Colors */
+.hc-card-good {
+    background: #ecfdf5; /* Light Green */
+    border: 1px solid #10b981;
+    color: #065f46;
+}
+[data-theme="dark"] .hc-card-good { background: rgba(16, 185, 129, 0.15); border-color: #059669; color: #a7f3d0; }
+
+.hc-card-bad {
+    background: #fef2f2; /* Light Red */
+    border: 1px solid #ef4444;
+    color: #991b1b;
+    opacity: 0.6;
+}
+[data-theme="dark"] .hc-card-bad { background: rgba(239, 68, 68, 0.15); border-color: #991b1b; color: #fca5a5; }
+
+.hc-card-neutral {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+}
+
+/* --- SOUTH INDIAN CHART --- */
+.si-container {
+    display: grid; 
+    grid-template-columns: repeat(4, 1fr); 
+    grid-template-rows: repeat(4, 1fr);
+    width: 100%; max-width: 400px; aspect-ratio: 1; 
+    border: 2px solid var(--text-main); 
+    background: var(--surface);
+    margin: 0 auto;
+}
+.si-box { 
+    border: 0.5px solid var(--border); 
+    position: relative; 
+    display: flex; align-items: center; justify-content: center; 
+    font-size: 0.75rem; font-weight: 700; 
+    flex-wrap: wrap; gap: 2px; 
+    min-height: 0;
+}
+.si-center { 
+    grid-area: 2 / 2 / 4 / 4; 
+    background: var(--hover-bg); 
+    display: flex; align-items: center; justify-content: center; 
+    color: var(--text-muted); font-weight: 900; font-size: 2rem; 
+}
+.si-sign-label { 
+    position: absolute; top: 2px; left: 3px; 
+    font-size: 0.6rem; color: var(--text-muted); opacity: 0.7; 
+}
+.si-lagna { 
+    background: var(--hover-bg); 
+    box-shadow: inset 0 0 0 2px var(--primary); 
+}
+.si-lagna::after {
+    content: "AS"; position: absolute; top: 2px; right: 2px;
+    font-size: 0.65rem; font-weight: 900; color: white;
+    background: var(--primary); padding: 0 4px; border-radius: 3px;
+}
+/* --- HODA CHART VISUALIZER --- */
+
+/* Background Variations */
+.bg-gold-light {
+    background: #fefce8; /* Very Pale Yellow */
+    box-shadow: inset 0 0 10px rgba(234, 179, 8, 0.1);
+}
+[data-theme="dark"] .bg-gold-light { background: rgba(234, 179, 8, 0.05); }
+
+.bg-gold-med {
+    background: #fef9c3; /* Light Yellow */
+    box-shadow: inset 0 0 15px rgba(234, 179, 8, 0.2);
+    border: 1px solid rgba(234, 179, 8, 0.3);
+}
+[data-theme="dark"] .bg-gold-med { background: rgba(234, 179, 8, 0.15); }
+
+.bg-gold-dark {
+    background: #fde047; /* Rich Gold */
+    box-shadow: inset 0 0 20px rgba(234, 179, 8, 0.4);
+    border: 1px solid rgba(161, 98, 7, 0.5);
+}
+[data-theme="dark"] .bg-gold-dark { background: rgba(234, 179, 8, 0.3); color: #fff; }
+
+.bg-bad {
+    background: #fef2f2;
+    opacity: 0.8; /* Dim the bad houses */
+    background-image: repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(239,68,68,0.05) 5px, rgba(239,68,68,0.05) 10px);
+}
+[data-theme="dark"] .bg-bad { background: rgba(239, 68, 68, 0.1); }
+
+/* Chart Elements */
+/* Chart Elements */
+.si-special-container {
+    position: absolute; 
+    top: 2px; 
+    right: 2px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1px;
+    z-index: 5;
+}
+
+.si-special-pt {
+    font-size: 0.55rem; 
+    font-weight: 900; 
+    padding: 0 3px; 
+    border-radius: 3px;
+    border: 1px solid currentColor;
+    background: rgba(255,255,255,0.9);
+}
+
+.sp-al { color: var(--primary); border-color: var(--primary); }
+.sp-vl { color: var(--success); border-color: var(--success); }
+
+.si-planet-row {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 3px;
+    font-size: 0.65rem; font-weight: 700; color: var(--planet-color);
+    margin-top: 8px; width: 100%;
+}
+
+.si-sound-row {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 4px;
+    margin-top: 4px; width: 100%;
+}
+
+.sound-chip {
+    background: var(--text-main); color: var(--bg);
+    padding: 1px 4px; border-radius: 4px;
+    font-size: 0.75rem; font-weight: 800;
+    text-transform: uppercase;
+    box-shadow: 0 2px 2px rgba(0,0,0,0.1);
+}
+/* In Gold Dark zones, make sounds pop */
+.bg-gold-dark .sound-chip {
+    background: #854d0e; color: white; transform: scale(1.1);
+}
+
+/* --- NEW STYLES FOR STEP 6-9 --- */
+.dasa-timeline {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+}
+
+.dasa-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px;
+    min-width: 80px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.dasa-vowel {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #f59e0b; /* Amber/Orange */
+    margin-bottom: 4px;
+}
+
+.dasa-years {
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: var(--text-main);
+}
+
+.dasa-age {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+/* --- TAB NAVIGATION --- */
+.tab-btn {
+    background: transparent;
+    border: 2px solid var(--border);
+    color: var(--text-muted);
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 20px;
+    transition: all 0.2s;
+}
+.tab-btn.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+/* --- KATAPAYADI MODULE STYLES --- */
+.app-grid-kp { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+@media (max-width: 768px) { .app-grid-kp { grid-template-columns: 1fr; } }
+
+.mode-switch { display: flex; gap: 10px; margin-bottom: 15px; }
+.mode-opt { 
+    cursor: pointer; padding: 6px 12px; border-radius: 4px; border: 1px solid var(--border);
+    font-size: 0.9em; 
+}
+.mode-opt.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+.kp-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 0.9rem; }
+.kp-table th { text-align: left; background: var(--header-bg); color: white; padding: 10px; }
+.kp-table td { border-bottom: 1px solid var(--border); padding: 10px; vertical-align: top; }
+
+.log-item { display: inline-block; padding: 2px 5px; margin: 2px; border-radius: 4px; font-size: 0.85em; border: 1px solid #ddd; }
+.log-keep { background: #dcfce7; color: #166534; }
+.log-drop { background: #fee2e2; color: #991b1b; text-decoration: line-through; opacity: 0.6; }
+.log-warn { background: #ffedd5; color: #9a3412; }
+
+/* Katapayadi Chart Grid */
+.kp-chart-grid { 
+    display: grid; 
+    grid-template-columns: repeat(4, 1fr); 
+    grid-template-rows: repeat(4, 1fr); 
+    width: 100%; aspect-ratio: 1; 
+    background: #fffde7; 
+    border: 2px solid #f57f17; 
+}
+.kp-box { border: 1px solid #fbc02d; position: relative; padding: 2px; min-height: 0; }
+
+.kp-sign-tag { position: absolute; top: 1px; left: 2px; font-size: 0.6em; font-weight: bold; color: #f57f17; }
+/* Grid Areas */
+.pi{grid-area:1/1}.ar{grid-area:1/2}.ta{grid-area:1/3}.ge{grid-area:1/4}
+.aq{grid-area:2/1}.cn{grid-area:2/4}
+.cp{grid-area:3/1}.le{grid-area:3/4}
+.sg{grid-area:4/1}.sc{grid-area:4/2}.li{grid-area:4/3}.vi{grid-area:4/4}
+
+.kp-center-lbl { 
+    grid-area: 2/2/4/4; display: flex; align-items: center; justify-content: center; 
+    color: #f57f17; opacity: 0.3; font-weight: bold; text-align: center; font-size: 1.2rem;
+}
+
+.kp-marker-list { display: flex; flex-direction: column; gap: 1px; margin-top: 12px; max-height: 100%; overflow-y: auto; }
+.m-tag { font-size: 0.65em; padding: 1px 4px; border-radius: 2px; color: white; text-align: center; }
+.m-nm { background: var(--primary); }
+.m-hl { border: 2px solid #ffd600; transform: scale(1.05); z-index: 5; }
+
+/* --- KP CHART MARKERS (Extended) --- */
+.m-tag { 
+    font-size: 0.65em; 
+    padding: 1px 4px; 
+    border-radius: 2px; 
+    color: white; 
+    text-align: center; 
+    margin-bottom: 1px;
+}
+.m-nm { background: var(--primary); }          /* Naming Input (Existing) */
+.m-la { background: #059669; font-weight:900; } /* Lagna (Green) */
+.m-pl { background: #d97706; }                 /* Planets (Amber) */
+.m-sp { background: #7c3aed; }                 /* Special Points (Purple) */
+.m-mo { background: #0284c7; font-weight:bold;} /* Moon (Blue) */
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .row { flex-direction: column; gap: 10px; }
+    .input-grid { padding: 15px; }
+    /* Stack Grid Panels on Mobile */
+    .naming-step > div { grid-template-columns: 1fr !important; }
+}
